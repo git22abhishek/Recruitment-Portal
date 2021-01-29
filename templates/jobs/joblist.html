@@ -1,0 +1,41 @@
+{% extends "users/main.html" %}
+
+{% block inner_content %}
+
+<h2 class="ui dividing header" style="margin-bottom: 50px">All Job Postings</h2> 
+
+<div class="ui cards">
+  {% for job in jobs %}
+    <div class="card">
+        <div class="content">
+            <div class="header">{{ job.title }}</div>
+            <div class="meta">
+                <span class="right floated time">{{ job.date_posted | date:"F d, Y" }}</span>
+                <span class="category">{{ job.company.username }}</span>
+            </div>
+            <div class="description" style="max-height: 120px;position: relative;overflow: hidden;">
+                <p>
+                    {{ job.description }}
+                    The text fades out at the bottom and has a “More…” link. Text fade out is nothing new around here.
+                    I’ve had a demo up for that for ages, which uses a transparent PNG file placed overtop the text. 
+                    But since this is a slightly different idea and the times-are-a-changin’ and we can get a bit more 
+                    progressive with this idea.
+                    Let’s assume these small boxes of text are used in a sidebar, so our HTML markup will be a div with class of 
+                    sidebar-box. This div can contain any number of paragraph elements, the last of which will have a class name of 
+                    read-more which contains a link button.
+                </p>
+            </div>
+        </div>
+        <div class="ui two bottom attached buttons">
+            <div class="ui button">
+                View 
+            </div>
+            <div class="ui button">
+                Apply
+            </div>
+        </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
