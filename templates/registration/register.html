@@ -1,0 +1,52 @@
+{% extends "registration/layout.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+<style type="text/css">
+    body {
+      background-color: #DADADA;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+    }
+  </style>
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 style="background-color: #DADADA;" class="ui block header">
+            <i class="user icon"></i>
+            <div class="content" >
+              Register as ...
+              <div class="sub header">Select the type of account you want to create</div>
+            </div>
+        </h2>
+        <!-- <div class="ui segment"> -->
+            <div class="ui large buttons">
+              <a href="{% url 'jobseeker_register' %}"><button class="ui button">Job Seeker</button></a>
+              <div class="or"></div>
+              <a href="{% url 'recruiter_register' %}"><button class="ui button">Recruiter</button></a>
+            </div>   
+        <!-- </div> -->
+    </div>
+</div>
+
+{% endblock content %}
+
+
+<!-- {% block extra_scripts %}
+
+{% endblock %} -->
+
+</body>
+
+</html>
+  

@@ -1,0 +1,114 @@
+{% extends "registration/layout.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/login.css' %}">
+{% endblock %}
+ 
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui black header">
+      <div class="content">
+        User Registration
+      </div>
+    </h2>
+    <form class="ui large form", method="POST" action="{% url 'jobseeker_register' %}">
+      {% csrf_token %}
+      <div class="ui stacked segment">
+        {{ form.non_field_errors }}
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="at icon"></i>
+            <!-- <input type="text" name="email" placeholder="E-mail address"> -->
+            {{ form.email.errors }}
+            {{ form.email }}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            {{ form.username.errors }}
+            {{ form.username }}
+            <!-- <input type="text" name="username" placeholder="User Name"> -->
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <!-- <input type="password" name="password" placeholder="Password"> -->
+            {{ form.password1.errors }}
+            {{ form.password1 }}
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <!-- <input type="password" name="password2" placeholder="Confirm Password"> -->
+            {{ form.password2.errors }}
+            {{ form.password2 }}
+          </div>
+        </div>
+        <div class="ui fluid large black submit button">Register</div>
+      </div>
+
+      <div class="ui error message">
+        <!-- {{ form.non_field_errors }} -->
+      </div>
+
+    </form>
+
+    <div class="ui message">
+      Already have an account? <a href="{% url 'login' %}">Sign In</a>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block extra_scripts %}
+<script>
+    $(document)
+    .ready(function() {
+      $('.ui.form')
+        .form({
+          fields: {
+            email: {
+              identifier  : 'email',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your e-mail'
+                },
+                {
+                  type   : 'email',
+                  prompt : 'Please enter a valid e-mail'
+                }
+              ]
+            },
+            password: {
+              identifier  : 'password',
+              rules: [
+                {
+                  type   : 'empty',
+                  prompt : 'Please enter your password'
+                },
+                {
+                  type   : 'length[6]',
+                  prompt : 'Your password must be at least 6 characters'
+                }
+              ]
+            }
+          }
+        })
+      ;
+      $('.ui.radio.checkbox')
+        .checkbox()
+      ;
+      $('select.dropdown')
+        .dropdown()
+      ;
+    })
+  ;
+</script>
+{% endblock %}
