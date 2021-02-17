@@ -1,0 +1,6 @@
+[Dd]ebug/
+[Dd]ebugPublic/
+
+env/
+.vscode/
+__pycache__/

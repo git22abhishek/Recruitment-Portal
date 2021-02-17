@@ -10,11 +10,11 @@ from ..forms import UserRegistrationForm, UserLoginForm
 # Create your views here.
 @login_required
 def home(request):
-    if request.user.is_authenticated:
-        if request.user.is_recruiter:
-            return redirect(reverse('recruiter_dashboard'))
-        else:
-            return redirect(reverse('jobseeker_dashboard'))
+    # if request.user.is_authenticated:
+    #     if request.user.is_recruiter:
+    #         return redirect(reverse('recruiter_dashboard'))
+    #     else:
+    #         return redirect(reverse('jobseeker_dashboard'))
     return HttpResponse('<h1>Homepage</h1>')
 
 class Register(TemplateView):
