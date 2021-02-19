@@ -8,6 +8,7 @@ from django.views.generic import (
 )
 from users.forms import RecruiterRegisterForm
 from users.decorators import recruiter_required
+from users.models import Job
 
 
 class RecruiterRegisterView(CreateView):
@@ -26,17 +27,29 @@ class RecruiterRegisterView(CreateView):
 
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class RecruiterDashboard(ListView):
-    pass
-    # model = Quiz
+    model = get_user_model()
     # ordering = ('name', )
     # context_object_name = 'quizzes'
-    # template_name = 'classroom/teachers/quiz_change_list.html'
 
-    # def get_queryset(self):
-    #     queryset = self.request.user.quizzes \
-    #         .select_related('subject') \
-    #         .annotate(questions_count=Count('questions', distinct=True)) \
-    #         .annotate(taken_count=Count('taken_quizzes', distinct=True))
-    #     return queryset
+    def get_queryset(self):
+        queryset = self.request.user.jobs
+        return queryset
+
+    template_name = 'home/recruiter_dashboard.html'
+
+@method_decorator([login_required, recruiter_required], name='dispatch')
+class CreateJobOpening(CreateView):
+    model = Job
+    fields = ('title', 'category', 'description', 'salary', 'location', 'vacancies',)
+    template_name = 'recruiter/create_job_opening.html'
+
+    def form_valid(self, form):
+        job = form.save(commit=False)
+        quiz.company = self.request.user
+        quiz.save()
+        messages.success(self.request, 'Job opening posted successfully!.')
+        return redirect('recruiter:recruiter_dashboard', quiz.pk)
+
+
 
 

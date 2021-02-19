@@ -18,8 +18,8 @@ from django.urls import path, include
 # from users.views import portal
 
 urlpatterns = [
-    path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
+    path('', include('users.urls')),
     # path('users/register/', portal.Register.as_view(), name='register'),
     # path('users/', include('django.contrib.auth.urls')),
     # path('users/', include('users.urls')),

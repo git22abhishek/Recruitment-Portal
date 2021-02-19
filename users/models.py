@@ -92,7 +92,7 @@ class Category(models.Model):
         return self.name
 
 class Job(models.Model):
-    company = models.ForeignKey(Recruiter, on_delete=models.CASCADE, related_name='jobs')
+    company = models.ForeignKey(User, on_delete=models.CASCADE, related_name='jobs')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='jobs')
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=30, unique=True)

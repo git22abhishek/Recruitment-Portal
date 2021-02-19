@@ -1,0 +1,50 @@
+{% extends "home/recruiter_dashboard.html" %}
+
+
+{% block recruiter_content %}
+
+<div class="ui segment" style="width:50%; margin:auto">
+    <form class="ui form">
+        <h4 class="ui dividing header">New Job Opening</h4>
+        <div class="field">
+          <label>Job Details</label>
+          <div class="fields">
+            <div class="twelve wide field">
+                <input type="text" name="job[job-title]" placeholder="Job Title">
+            </div>
+            <div class="four wide field">
+                <select class="ui fluid dropdown">
+                    <option value="">Select Category</option>
+                    <option value="ENG">Engineering</option>
+                    <option value="Med">Medical</option>
+                </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+            <label>Description</label>
+            <textarea></textarea>
+        </div>
+        <div class="three fields">
+            <div class="field">
+              <label>Vacancies</label>
+              <input type="text" placeholder="Vacancies">
+            </div>
+            <div class="field">
+              <label>Salary</label>
+              <input type="text" placeholder="Salary">
+            </div>
+            <div class="field">
+              <label>Location</label>
+              <input type="text" placeholder="Location">
+            </div>
+        </div>        
+        <div class="ui button" tabindex="0">Create</div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block recruiter_scripts %}
+
+{% endblock %}
