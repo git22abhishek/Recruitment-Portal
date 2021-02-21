@@ -8,14 +8,13 @@ from django.contrib.auth import (
 from ..forms import UserRegistrationForm, UserLoginForm
 
 # Create your views here.
-@login_required
 def home(request):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('recruiter:recruiter_dashboard')
         else:
             return redirect(reverse('jobseeker_dashboard'))
-    return HttpResponse('<h1>Homepage</h1>')
+    return render(request, 'registration/homepage.html')
 
 class Register(TemplateView):
     template_name = 'registration/register.html'
