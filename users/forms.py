@@ -6,6 +6,8 @@ from django.contrib.auth import (
     get_user_model
  )
 
+from .models import Job
+
 class UserRegistrationForm(UserCreationForm):
 
     class Meta:
@@ -94,8 +96,19 @@ class UserLoginForm(forms.Form):
         return email
 
 class RecruiterRegisterForm(UserRegistrationForm):
+
+    def __init__(self, *args, **kwargs):
+        super(RecruiterRegisterForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs = {'placeholder': 'Company Name',}
+
     class Meta(UserRegistrationForm.Meta):
         model = get_user_model()
+        # fields = ('email', 'username', 'password1', 'password2')
+        # widgets = {
+        #     'username': forms.TextInput(attrs={
+        #         "placeholder": "Company Name"
+        #     }),
+        # }
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -114,3 +127,50 @@ class JobseekerRegisterForm(UserRegistrationForm):
         if commit:
             user.save()
         return user
+
+
+class NewJobForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(NewJobForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs = {
+            'placeholder': 'Job Title',
+            'name': 'job[job-title]'
+        }
+        self.fields['category'].empty_label = 'Select Category'
+        self.fields['work_location'].empty_label = 'Work Location'
+        self.fields['category'].widget.attrs = {
+            'class': 'ui fluid dropdown'
+        }
+        self.fields['vacancies'].widget.attrs = {
+            'placeholder': 'Vacancies',
+        }
+        self.fields['last_date'].widget.attrs = {
+            'id': 'last_date',
+        }
+        self.fields['last_date'].input_formats =['%Y/%m/%d %H:%M']
+        self.fields['salary'].widget.attrs = {
+            'placeholder': 'Salary',
+        }
+        self.fields['country'].widget.attrs = {
+            'placeholder': 'Country',
+        }
+        self.fields['city'].widget.attrs = {
+            'placeholder': 'City',
+        }
+        self.fields['description'].widget.attrs = {
+            'placeholder': 'Description',
+        }
+    class Meta:
+        model = Job
+        fields = (
+        'title', 'category', 'description', 
+        'salary', 'vacancies', 'last_date',
+        'country', 'city', 'work_location',
+        )
+
+    # title = forms.CharField(required=True, 
+    # widget=forms.TextInput(
+    #     attrs={
+    #         "placeholder": "Job Title"
+    #     }
+    # )) 

@@ -1,24 +1,25 @@
-{% extends "registration/layout.html" %}
+{% extends "registration/base.html" %}
 
 {% load static %}
 
-
-{% block content %}
-
+{% block base_head %}
 <style type="text/css">
-    body {
-      background-color: #DADADA;
-    }
-    body > .grid {
-      height: 100%;
-    }
-    .image {
-      margin-top: -100px;
-    }
-    .column {
-      max-width: 450px;
-    }
-  </style>
+  body {
+    background-color: #DADADA;
+  }
+  body > .grid {
+    height: 100%;
+  }
+  .image {
+    margin-top: -100px;
+  }
+  .column {
+    max-width: 450px;
+  }
+</style>
+{% endblock %}
+
+{% block base_content %}
 
 <div class="ui middle aligned center aligned grid">
     <div class="column">
@@ -39,14 +40,4 @@
     </div>
 </div>
 
-{% endblock content %}
-
-
-<!-- {% block extra_scripts %}
-
-{% endblock %} -->
-
-</body>
-
-</html>
-  
+{% endblock %}

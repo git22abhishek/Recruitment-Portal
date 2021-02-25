@@ -1,75 +1,28 @@
 {% extends "registration/layout.html" %}
 
+{% block sidebar_content %}
+  <a class="item">
+    Company Profile
+  </a>
+  <a class="item">
+    Applications
+    <div class="ui teal left pointing label">1</div>
+  </a>
+  <a href="{% url 'recruiter:create_job' %}" class="item">
+    New Job Post
+  </a>
+{% endblock %}
+
+
 {% block content %}
 
-<div class="ui left vertical menu sidebar">
-    <a class="active black item">
-        Dashboard
-    </a>
-    <a class="item">
-      Company Profile
-    </a>
-    <a class="item">
-      Applications
-      <div class="ui teal left pointing label">1</div>
-    </a>
-    <a href="{% url 'recruiter:create_job' %}" class="item">
-      New Job Post
-    </a>
-    <a class="item">
-      <i class="cog icon"></i>
-      Settings
-    </a>
-    
-    <!-- <div class="item">
-      <div class="ui transparent icon input">
-        <input type="text" placeholder="Search mail...">
-        <i class="search icon"></i>
-      </div>
-    </div> -->
-</div>
-
-<div class="pusher">
-    <div class="ui big menu">
-        <a class="launch icon item">
-            <i class="content icon"></i>
-        </a>
-      <a class="active item">
-        Recruitment Portal
-      </a>
-      <a href="{% url 'recruiter:recruiter_dashboard' %}" class="item">
-        Home
-      </a>
-      <a href="{% url 'about' %}" class="item">
-        About
-      </a>
-      <div class="right menu">
-        <div class="item">
-          <div class="ui transparent icon input">
-            <input type="text" placeholder="Search people...">
-            <i class="search link icon"></i>
-          </div>
-        </div>
-        <a  href="{% url 'logout' %}" class="ui item">
-          Logout
-        </a>
-      </div>
-    </div>
-    {% block recruiter_content %}{% endblock %}
-</div>
+{% block recruiter_content %}{% endblock %}
 
 {% endblock %}
 
-{% block extra_scripts %}
-<script>
 
-    $('.launch').on('click', function(){
-        $('.ui.sidebar')
-            .sidebar('toggle')
-        ;
-    })
-    ;
-</script>
+{% block extra_scripts %}
+
 
 {% block recruiter_scripts %}{% endblock %}
 

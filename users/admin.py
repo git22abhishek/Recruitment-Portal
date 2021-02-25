@@ -24,7 +24,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class JobAdmin(admin.ModelAdmin):
-    list_display = ('title', 'company', 'category', 'date_posted', 'location', 'vacancies')
+    list_display = ('title', 'company', 'category', 'date_posted','country', 'city', 'vacancies')
     prepopulated_fields = {'slug': ('title',)}
 
 # Register your models here.

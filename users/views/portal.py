@@ -19,19 +19,6 @@ def home(request):
 class Register(TemplateView):
     template_name = 'registration/register.html'
 
-    # context = {}
-    # if request.method ==' POST':
-    #     form = UserRegistrationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         redirect(request, 'login')
-    #     context['register-form'] = form
-    # else:
-    #     form = UserRegistrationForm()
-    #     context['register-form'] = form
-    # return render(request, "users/register.html", context=context)
-
-
 # Create your views here.
 def login_view(request):
     # if this is a POST request we need to process the form data

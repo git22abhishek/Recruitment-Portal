@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.shortcuts import reverse
-
+from django.template.defaultfilters import slugify
 
 
 # Manager for custom user model
@@ -15,6 +15,7 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             username=username,
+            slug=slugify(username)
         )
 
         user.set_password(password)
@@ -39,6 +40,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     email = models.EmailField(verbose_name="Email address", max_length=60, unique=True)
     username = models.CharField(verbose_name="Username", max_length=30)
+    slug = models.SlugField(max_length=30, null=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now_add=True)
     is_admin = models.BooleanField(default=False)
@@ -69,6 +71,12 @@ class User(AbstractBaseUser):
 
     def get_email(self):
         return self.email
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.username)
+        # random_string = generate_user_string()
+        # self.slug = slug + "-" + random_string
+        super().save(*args, **kwargs)
 
 
 class Recruiter(models.Model):
@@ -86,7 +94,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         # return reverse("category_list", kwargs={"pk": self.pk})
-        return reverse("category_list", args=[self.slug])
+        return reverse("category_list", kwargs={'slug':self.slug})
     
     def __str__(self):
         return self.name
@@ -95,15 +103,22 @@ class Job(models.Model):
     company = models.ForeignKey(User, on_delete=models.CASCADE, related_name='jobs')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='jobs')
     title = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=30, unique=True)
+    is_active = models.BooleanField(default=True)
+    slug = models.SlugField(max_length=50)
     date_posted = models.DateTimeField(auto_now_add=True)
+    last_date = models.DateTimeField(verbose_name="Last Date To Apply")
     description = models.TextField()
-    salary = models.PositiveIntegerField(null=True)
-    location = models.CharField(max_length=30)
-    vacancies = models.IntegerField(default=1)
+    salary = models.PositiveIntegerField(blank=True, null=True)
+    work_location = models.CharField(max_length=1, choices=(('', 'Select Work Location'), ('O', 'In-Office'),('R', 'Remote')))
+    country = models.CharField(max_length=30, default='')
+    city = models.CharField(max_length=30, default='')
+    vacancies = models.PositiveIntegerField(default=1)
 
     class Meta:
         ordering = ('-date_posted',)
+
+    def get_absolute_url(self):
+        return reverse("jobs:job_details", kwargs={'company':self.company.slug, 'slug':self.slug, 'pk': self.id})
 
     def __str__(self):
         return f'{self.title}, at {self.company.username}'

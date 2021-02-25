@@ -8,11 +8,20 @@ urlpatterns = [
     path('register/', portal.Register.as_view(), name='register'),
     path('login/', portal.login_view, name='login'),
     path('logout/', portal.logout_view, name='logout'),
-    path('register/recruiter/', recruiter.RecruiterDashboard.as_view(), name='recruiter_dashboard'),
+    # path('register/recruiter/', recruiter.RecruiterDashboard.as_view(), name='recruiter_dashboard'),
     path('', portal.home, name='home'),
 
     path('recruiter/', include(([
         path('create_job/', recruiter.CreateJobOpening.as_view(), name='create_job'),
         path('', recruiter.RecruiterDashboard.as_view(), name='recruiter_dashboard'),
-        ], 'users'), namespace='recruiter'))
+        ], 'users'), namespace='recruiter'
+    )),
+
+    path('jobs/', include(([
+        path('<slug:company>/<slug:slug>-<int:pk>/', recruiter.JobDetailView.as_view(), name='job_details'),
+        path('<slug:company>/<slug:slug>-<int:pk>/update/', recruiter.JobUpdateView.as_view(), name='update_job'),
+        ], 'users'), namespace='jobs'
+    )),
 ]
+
+# path('quiz/<int:quiz_pk>/question/<int:question_pk>/', teachers.question_change, name='question_change')

@@ -1,12 +1,12 @@
-{% extends "registration/layout.html" %}
+{% extends "registration/base.html" %}
 
 {% load static %}
 
-{% block extra_head %}
+{% block base_head %}
     <link rel="stylesheet" type="text/css" href="{% static 'users/css/login.css' %}">
 {% endblock %}
  
-{% block content %}
+{% block base_content %}
 <div class="ui middle aligned center aligned grid">
   <div class="column">
     <h2 class="ui black header">
@@ -64,9 +64,9 @@
     </div>
   </div>
 </div>
-{% endblock content %}
+{% endblock %}
 
-{% block extra_scripts %}
+{% block base_scripts %}
 <script>
     $(document)
     .ready(function() {

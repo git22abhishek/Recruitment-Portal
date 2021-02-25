@@ -4,47 +4,82 @@
 {% block recruiter_content %}
 
 <div class="ui segment" style="width:50%; margin:auto">
-    <form class="ui form">
+    <form class="ui form", method="POST" action="{% url 'recruiter:create_job' %}">
+    {% csrf_token %}
         <h4 class="ui dividing header">New Job Opening</h4>
         <div class="field">
           <label>Job Details</label>
           <div class="fields">
             <div class="twelve wide field">
-                <input type="text" name="job[job-title]" placeholder="Job Title">
+                <!--<input type="text" name="job[job-title]" placeholder="Job Title"> -->
+                {{ form.title.errors }}
+                {{ form.title }}
+
             </div>
             <div class="four wide field">
-                <select class="ui fluid dropdown">
+                 <!-- <select class="ui fluid dropdown">
                     <option value="">Select Category</option>
                     <option value="ENG">Engineering</option>
                     <option value="Med">Medical</option>
-                </select>
+                </select> -->
+                {{ form.category.errors }}
+                {{ form.category }}
             </div>
           </div>
         </div>
         <div class="field">
             <label>Description</label>
-            <textarea></textarea>
+            {{ form.description.errors }}
+            {{ form.description }}
+            <!--<textarea></textarea>-->
         </div>
         <div class="three fields">
             <div class="field">
               <label>Vacancies</label>
-              <input type="text" placeholder="Vacancies">
+              <!--<input type="text" placeholder="Vacancies">-->
+              {{ form.vacancies.errors }}
+              {{ form.vacancies }}
             </div>
             <div class="field">
               <label>Salary</label>
-              <input type="text" placeholder="Salary">
+              <!--<input type="text" placeholder="Salary">-->
+              {{ form.salary.errors }}
+              {{ form.salary }}
             </div>
             <div class="field">
-              <label>Location</label>
-              <input type="text" placeholder="Location">
+              <label>Work Location</label>
+              {{ form.work_location.errors }}
+              {{ form.work_location }}
+            </div>
+        </div>
+        <div class="three fields">
+            <div class="field">
+              <label>Last date</label>
+              {{ form.last_date.errors }}
+              {{ form.last_date }}
+            </div>
+            <div class="field">
+              <label>Country</label>
+              <!--<input type="text" placeholder="Salary">-->
+              {{ form.country.errors }}
+              {{ form.country }}
+            </div>
+            <div class="field">
+              <label>City</label>
+              {{ form.city.errors }}
+              {{ form.city }}
             </div>
         </div>        
-        <div class="ui button" tabindex="0">Create</div>
+        <button type='submit' class="ui submit button">Create</button>
     </form>
 </div>
 {% endblock %}
 
 
 {% block recruiter_scripts %}
-
+  <script>
+    $(function () {
+      $("#last_date").datetimepicker();
+    });
+  </script>
 {% endblock %}

@@ -1,13 +1,13 @@
-{% extends "registration/layout.html" %}
+{% extends "registration/base.html" %}
 
 {% load static %}
 
-{% block extra_head %}
+{% block base_head %}
 <link rel="stylesheet" type="text/css" href="{% static 'users/css/homepage.css' %}">
 {% endblock %}
 
 
-{% block content %}
+{% block base_content %}
 <!-- Following Menu -->
 <div class="ui large top fixed hidden menu">
     <div class="ui container">
@@ -106,7 +106,7 @@
 {% endblock %}
 
 
-{% block extra_scripts %}
+{% block base_scripts %}
 
 <script>
     $(document)
