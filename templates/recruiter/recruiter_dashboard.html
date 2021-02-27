@@ -1,0 +1,73 @@
+{% extends "home/layout.html" %}
+
+{% block sidebar_content %}
+  <a class="item">
+    Company Profile
+  </a>
+  <a class="item">
+    Applications
+    <div class="ui teal left pointing label">1</div>
+  </a>
+  <a href="{% url 'recruiter:create_job' %}" class="item">
+    New Job Post
+  </a>
+{% endblock %}
+
+
+{% block content %}
+
+{% block recruiter_content %}
+
+<table class="ui single line table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Date Posted</th>
+      <th>Last Date</th>
+      <th>Vacancies</th>
+      <th>Salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for job in jobs %}
+      <tr data-href="{{ job.get_absolute_url }}" style="cursor: pointer;">
+        <td>{{ job.title }}</td>
+        <td>{{ job.category }}</td>
+        <td>{{ job.date_posted }}</td>
+        <td>{{ job.last_date }}</td>
+        <td>{{ job.vacancies }}</td>
+        <td>{{ job.salary }}</td>
+      </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock %}
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+
+
+{% block recruiter_scripts %}
+<script>
+  // $(document).ready(function(){
+  //   $('table tr').click(function(){
+  //       window.location = $(this).data('href');
+  //       return false;
+  //   });
+  // });
+
+  $(document).ready(function(){
+    $('table tr').click(function(){
+        window.location = $(this).data('href');
+        return false;
+    });
+  });
+</script>
+{% endblock %}
+
+{% endblock %}

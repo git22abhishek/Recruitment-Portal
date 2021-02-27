@@ -24,6 +24,7 @@ class JobseekerRegisterView(CreateView):
         login(self.request, user)
         return redirect(reverse('home'))
 
+
 @method_decorator([login_required, jobseeker_required], name='dispatch')
 class JobSeekerDashboard(ListView):
     pass

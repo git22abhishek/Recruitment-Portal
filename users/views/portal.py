@@ -7,19 +7,24 @@ from django.contrib.auth import (
 )
 from ..forms import UserRegistrationForm, UserLoginForm
 
-# Create your views here.
+
 def home(request):
     if request.user.is_authenticated:
         if request.user.is_recruiter:
             return redirect('recruiter:recruiter_dashboard')
         else:
             return redirect(reverse('jobseeker_dashboard'))
-    return render(request, 'registration/homepage.html')
+    return render(request, 'home/homepage.html')
+
 
 class Register(TemplateView):
     template_name = 'registration/register.html'
 
-# Create your views here.
+
+class AboutView(TemplateView):
+    template_name = 'home/about.html'
+
+
 def login_view(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -32,8 +37,8 @@ def login_view(request):
             # redirect to a new URL:
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
-            user = authenticate(request, email=email, 
-                password=password)
+            user = authenticate(request, email=email,
+                                password=password)
 
             if user != None:
                 login(request, user)
@@ -43,7 +48,7 @@ def login_view(request):
             else:
                 attempt = request.session.get("attempt") or 0
                 request.session["attempt"] = attempt + 1
-                request.session["invalid_user"] = 1 # 1 = True
+                request.session["invalid_user"] = 1  # 1 = True
 
     # if a GET (or any other method) create a blank form
     else:
@@ -51,10 +56,7 @@ def login_view(request):
 
     return render(request, 'registration/login.html', {"form": form})
 
+
 def logout_view(request):
     logout(request)
     return redirect(reverse('home'))
-
-
-class AboutView(TemplateView):
-    template_name = 'home/about.html'

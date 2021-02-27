@@ -34,14 +34,15 @@ class RecruiterRegisterView(CreateView):
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class RecruiterDashboard(ListView):
     model = Job
-    # ordering = ('name', )
-    # context_object_name = 'quizzes'
+    ordering = ('date_posted', )
+    context_object_name = 'jobs'
 
-    # def get_queryset(self):
-    #     queryset = self.request.user.jobs
-    #     return queryset
+    def get_queryset(self):
+        queryset = self.request.user.jobs.all()
+        print(queryset)
+        return queryset
 
-    template_name = 'home/recruiter_dashboard.html'
+    template_name = 'recruiter/recruiter_dashboard.html'
 
 
 @method_decorator([login_required, recruiter_required], name='dispatch')
@@ -62,19 +63,6 @@ class CreateJobOpening(CreateView):
         # return redirect('recruiter:recruiter_dashboard', job.slug)
 
 
-@method_decorator([login_required], name='dispatch')
-class JobDetailView(DetailView):
-    model = Job
-    template_name = 'home/job_details.html'
-
-    def get_object(self):
-        return get_object_or_404(Job,
-                                 id=self.kwargs['pk'],
-                                 slug=self.kwargs['slug'],
-                                 company__slug=self.kwargs['company']
-                                 )
-
-
 @method_decorator([login_required, recruiter_required], name='dispatch')
 class JobUpdateView(UpdateView):
     model = Job
@@ -93,3 +81,21 @@ class JobUpdateView(UpdateView):
         job.slug = slugify(job.title)
         job.save()
         return super().form_valid(form)
+
+
+@login_required
+def job_detail_view(request, *args, **kwargs):
+    template_name = 'home/job_details.html'
+
+    job = get_object_or_404(Job,
+                            id=kwargs['pk'],
+                            slug=kwargs['slug'],
+                            company__slug=kwargs['company']
+                            )
+
+    if request.user.is_recruiter:
+        template_name = 'recruiter/job_details.html'
+    else:
+        template_name = 'jobseeker/job_details.html'
+
+    return render(request, template_name, {'job': job})
